@@ -1,0 +1,11 @@
+﻿@model MVC_Inventory_System.Models.Product
+
+<h1>Delete Product</h1>
+
+<p>Are you sure you want to delete the product <strong>@Model.ProductName</strong>?</p>
+
+<form asp-action="DeleteProduct" method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="ProductList" asp-controller="Product" class="btn btn-secondary">Cancel</a>
+</form>

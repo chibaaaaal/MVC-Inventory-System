@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVC_Inventory_System.Models.Product>
+
+<h1>Product List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.ProductName</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price</td>
+                <td>
+                    <a asp-action="EditProduct" asp-route-id="@product.ProductId" class="btn btn-sm btn-success">Edit</a>
+                    <a asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
