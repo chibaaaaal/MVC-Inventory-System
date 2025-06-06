@@ -1,0 +1,35 @@
+﻿@model MVC_Inventory_System.Models.Product
+
+@{
+    ViewData["Title"] = "Sell Product";
+}
+
+<h2>Sell Product</h2>
+
+<div class="card p-3">
+    <h4>Product: @Model.ProductName</h4>
+    <p><strong>Available Stock:</strong> @Model.Quantity</p>
+    <p><strong>Price:</strong> Php @Model.Price</p>
+
+    <form asp-action="SellProduct" method="post">
+        <input type="hidden" name="productId" value="@Model.ProductId" />
+
+        <div class="form-group mb-2">
+            <label for="quantity">Quantity to Sell:</label>
+            <input type="number" name="quantity" class="form-control" min="1" max="@Model.Quantity" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sell</button>
+        <a asp-action="ProductList" class="btn btn-secondary">Cancel</a>
+    </form>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+</div>

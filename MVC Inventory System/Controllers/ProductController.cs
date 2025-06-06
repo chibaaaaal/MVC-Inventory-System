@@ -22,6 +22,8 @@ namespace MVC_Inventory_System.Controllers
             return View(Products);
         }
 
+        
+
         [HttpGet]
         public IActionResult AddProduct()
         {
@@ -87,6 +89,49 @@ namespace MVC_Inventory_System.Controllers
                 _context.Remove(product);
                 _context.SaveChanges();
             }
+            return RedirectToAction("ProductList");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SellProduct(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null)
+                return NotFound();
+
+            return View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SellProduct(int productId, int quantity)
+        {
+            var product = await _context.Products.FindAsync(productId);
+
+            if (product == null)
+                return NotFound();
+
+            if (product.Quantity < quantity)
+            {
+                ModelState.AddModelError("", "Not enough stock available.");
+                return RedirectToAction("ProductList");
+            }
+
+            // Subtract quantity from stock
+            product.Quantity -= quantity;
+
+            // Create a transaction record
+            var transaction = new Transaction
+            {
+                ProductId = productId,
+                QuantitySold = quantity,
+                TransactionDate = DateTime.Now
+            };
+
+            // Save changes
+            _context.Products.Update(product);
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("ProductList");
         }
     }

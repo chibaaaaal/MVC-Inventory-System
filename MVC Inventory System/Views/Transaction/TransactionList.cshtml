@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MVC_Inventory_System.Models.Transaction>
+
+<h1>Transaction List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Transaction ID</th>
+            <th>Product ID</th>
+            <th>Quantity Sold</th>
+            <th>Transaction Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.TransactionId</td>
+                <td>@transaction.ProductId</td>
+                <td>@transaction.QuantitySold</td>
+                <td>@transaction.TransactionDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

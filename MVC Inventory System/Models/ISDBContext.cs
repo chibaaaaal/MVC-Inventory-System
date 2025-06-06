@@ -9,5 +9,6 @@ namespace MVC_Inventory_System.Models
             : base(options) { }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }
